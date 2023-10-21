@@ -6,6 +6,8 @@ import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "./navigation-items";
+import { ModeToggle } from "../mode-toggle";
+import { UserButton } from "@clerk/nextjs";
 
 const NavigationSidebar = async () => {
   const profile = await currentProfile();
@@ -41,6 +43,18 @@ const NavigationSidebar = async () => {
           </div>
         ))}
       </ScrollArea>
+
+      <div className="flex flex-col items-center gap-4 pb-3 mt-auto">
+        <ModeToggle  />
+        <UserButton
+          afterSignOutUrl="/"
+          appearance={{
+            elements: {
+              avatarBox: "h-[48px] w-[48px]",
+            },
+          }}
+        />
+      </div>
     </div>
   );
 };
