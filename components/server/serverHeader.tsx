@@ -21,6 +21,7 @@ import {
   DropdownMenuSeparator,
 } from "@radix-ui/react-dropdown-menu";
 import { useModal } from "@/hooks/use-modal-store";
+import { type } from "os";
 
 interface serverHeaderProps {
   server: ServerWithMembersWithProfiles;
@@ -68,7 +69,10 @@ const ServerHeader = ({ server, role }: serverHeaderProps) => {
             </DropdownMenuItem>
           )}
           {isModerator && (
-            <DropdownMenuItem className="flex justify-between w-full px-3 py-2 text-sm rounded-lg outline-none cursor-pointer hover:bg-zinc-900">
+            <DropdownMenuItem
+              onClick={() => onOpen("createChannel")}
+              className="flex justify-between w-full px-3 py-2 text-sm rounded-lg outline-none cursor-pointer hover:bg-zinc-900"
+            >
               Create Channel
               <PlusCircle className="w-4 h-4 ml-auto" />
             </DropdownMenuItem>
@@ -77,13 +81,19 @@ const ServerHeader = ({ server, role }: serverHeaderProps) => {
             <DropdownMenuSeparator className="h-[1px] bg-zinc-950" />
           )}
           {isAdmin && (
-            <DropdownMenuItem className="flex justify-between w-full px-3 py-2 text-sm rounded-lg outline-none cursor-pointer hover:bg-zinc-900 text-rose-600">
+            <DropdownMenuItem
+              onClick={() => onOpen("deleteServer", { server })}
+              className="flex justify-between w-full px-3 py-2 text-sm rounded-lg outline-none cursor-pointer hover:bg-zinc-900 text-rose-600"
+            >
               Delete Server
               <Trash className="w-4 h-4 ml-auto" />
             </DropdownMenuItem>
           )}
           {!isAdmin && (
-            <DropdownMenuItem className="flex justify-between w-full px-3 py-2 text-sm rounded-lg outline-none cursor-pointer hover:bg-zinc-900 text-rose-600">
+            <DropdownMenuItem
+              onClick={() => onOpen("leaveServer", { server })}
+              className="flex justify-between w-full px-3 py-2 text-sm rounded-lg outline-none cursor-pointer hover:bg-zinc-900 text-rose-600"
+            >
               Leave Server
               <LogOut className="w-4 h-4 ml-auto" />
             </DropdownMenuItem>
