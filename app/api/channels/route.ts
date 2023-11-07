@@ -1,3 +1,4 @@
+import { channel } from "diagnostics_channel";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { MemberRole } from "@prisma/client";
@@ -54,3 +55,5 @@ export async function POST(req: Request) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
+

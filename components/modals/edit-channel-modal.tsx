@@ -46,14 +46,14 @@ const formSchema = z.object({
   type: z.nativeEnum(ChannelType),
 });
 
-const CreateChannelModal = () => {
+const EditChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const params = useParams();
 
-  const { channelType } = data;
+  const { channelType, channel, server } = data;
 
-  const isModalOpen = isOpen && type === "createChannel";
+  const isModalOpen = isOpen && type === "editChannel";
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -64,24 +64,23 @@ const CreateChannelModal = () => {
   });
 
   useEffect(() => {
-    if (channelType) {
-      form.setValue("type", channelType);
-    } else {
-      form.setValue("type", ChannelType.TEXT);
+    if (channel) {
+      form.setValue("name", channel.name);
+      form.setValue("type", channel.type);
     }
-  }, [form, channelType]);
+  }, [form, channel]);
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: "/api/channels",
+        url: `/api/channels/${channel?.id}`,
         query: {
           serverId: params?.serverId,
         },
       });
-      await axios.post(url, values);
+      await axios.patch(url, values);
 
       form.reset();
       router.refresh();
@@ -101,7 +100,7 @@ const CreateChannelModal = () => {
       <DialogContent className="p-0 overflow-hidden text-black bg-white">
         <DialogHeader className="px-6 pt-8 ">
           <DialogTitle className="text-2xl text-center">
-            Create Channel
+            Edit Channel
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -158,7 +157,7 @@ const CreateChannelModal = () => {
 
             <DialogFooter className="px-6 py-4 bg-gray-100">
               <Button disabled={isLoading} variant="primary">
-                Create
+                Update
               </Button>
             </DialogFooter>
           </form>
@@ -168,4 +167,4 @@ const CreateChannelModal = () => {
   );
 };
 
-export default CreateChannelModal;
+export default EditChannelModal;

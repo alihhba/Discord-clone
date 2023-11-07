@@ -45,7 +45,7 @@ const NavigationSidebar = async () => {
       </ScrollArea>
 
       <div className="flex flex-col items-center gap-4 pb-3 mt-auto">
-        <ModeToggle  />
+        <ModeToggle />
         <UserButton
           afterSignOutUrl="/"
           appearance={{

@@ -1,6 +1,18 @@
 "use client";
 
 import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useModal } from "@/hooks/use-modal-store";
+import { ServerWithMembersWithProfiles } from "@/types";
+import { MemberRole } from "@prisma/client";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@radix-ui/react-dropdown-menu";
+import {
   ChevronDown,
   LogOut,
   PlusCircle,
@@ -9,19 +21,6 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
-import { ServerWithMembersWithProfiles } from "@/types";
-import { MemberRole } from "@prisma/client";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "@radix-ui/react-dropdown-menu";
-import { useModal } from "@/hooks/use-modal-store";
-import { type } from "os";
 
 interface serverHeaderProps {
   server: ServerWithMembersWithProfiles;
@@ -36,11 +35,11 @@ const ServerHeader = ({ server, role }: serverHeaderProps) => {
   return (
     <div>
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center justify-between w-full h-12 px-3 font-semibold transition border-0 border-b-2 outline-none text-md hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 ">
+        <DropdownMenuTrigger className="flex items-center justify-between w-full h-12 px-3 font-semibold transition border-0 outline-none text-md hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 ">
           <button>{server.name}</button>
           <ChevronDown />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 my-1  font-medium text-black dark:text-neutral-400 space-y-[2px] outline-none bg-zinc-800 p-1 rounded-lg">
+        <DropdownMenuContent className="w-56 my-1 z-50  font-medium text-black dark:text-neutral-400 space-y-[2px] outline-none bg-zinc-800 p-1 rounded-lg ">
           {isModerator && (
             <DropdownMenuItem
               onClick={() => onOpen("invite", { server })}
