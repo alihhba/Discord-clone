@@ -1,6 +1,8 @@
 "use client";
-import { Search } from "lucide-react";
+import { Crown, Search } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ActionTooltip } from "../action-tooltip";
 import {
   CommandDialog,
   CommandEmpty,
@@ -9,7 +11,6 @@ import {
   CommandItem,
   CommandList,
 } from "../ui/command";
-import { useParams, useRouter } from "next/navigation";
 
 interface ServerSearchProps {
   data: {
@@ -99,8 +100,17 @@ const ServerSearch = ({ data }: ServerSearchProps) => {
                           {icon} <span>{name}</span>
                         </div>
 
-                        <div className="lowercase">
-                          {role !== "GUEST" && role}
+                        <div className="">
+                          {role === "ADMIN" && (
+                            <ActionTooltip label="Admin" side="left">
+                              <Crown className="w-4 h-4 text-yellow-500" />
+                            </ActionTooltip>
+                          )}
+                          {role === "MODERATOR" && ( 
+                            <ActionTooltip label="Moderator" side="left">
+                              <Crown className="w-4 h-4 text-blue-500" />
+                            </ActionTooltip>
+                          )}
                         </div>
                       </div>
                     </CommandItem>
